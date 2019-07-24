@@ -1,4 +1,4 @@
-onsole.log('Loading function');
+console.log('Loading function');
 
 var AWS = require('aws-sdk');
 var dynamo = new AWS.DynamoDB.DocumentClient();
