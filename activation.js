@@ -10,8 +10,8 @@ exports.handler = function(event, context) {
    var params = {
     TableName:table,
     Key:{
-        "serialNumber": event.serialNumber,
-        "clientId": event.clientId,
+        "deviceId": event.deviceId,
+        "name": event.name,
         }
     };
 
@@ -28,8 +28,8 @@ exports.handler = function(event, context) {
             var params = {
                 TableName:table,
                 Key:{
-                    "serialNumber": event.serialNumber,
-                    "clientId": event.clientId,
+                    "deviceID": event.deviceID,
+                    "name": event.name,
                 },
                 UpdateExpression: "set email = :val1, activated = :val2",
                 ExpressionAttributeValues:{
