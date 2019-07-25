@@ -10,43 +10,53 @@ Parameters:
     ConstraintDescription: Must be an existing S3 Bucket in the same region.
     AllowedPattern: .
 Resources:
-  
-IOTtable: 
-  Type: AWS::DynamoDB::Table
-  Properties: 
-    AttributeDefinitions: 
-      - 
-        AttributeName: "deviceId"
-        AttributeType: "S"
-      - 
-        AttributeName: "name"
-        AttributeType: "S"
-    KeySchema: 
-      - 
-        AttributeName: "deviceId"
-        KeyType: "HASH"
-      - 
-        AttributeName: "name"
-        KeyType: "RANGE"
-    ProvisionedThroughput: 
-       ReadCapacityUnits: "5"
-       WriteCapacityUnits: "5"
-    GlobalSecondaryIndexes: 
-      - 
-        IndexName: "myGSI"
-        KeySchema: 
-          - 
-            AttributeName: "deviceId"
-            KeyType: "HASH"
-        Projection: 
-          ProjectionType: "KEYS_ONLY
-        ProvisionedThroughput: 
-          ReadCapacityUnits: "5"
-          WriteCapacityUnits: "5"            
-    Tags:
-      - Key: foo
-Value: bar         
-         
+  IOTtable: 
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - 
+          AttributeName: "deviceId"
+          AttributeType: "S"
+        - 
+          AttributeName: "name"
+          AttributeType: "S"
+        - 
+          AttributeName: "email"
+          AttributeType: "S" 
+        - 
+          AttributeName: "activationcode"
+          AttributeType: "S"
+        - 
+          AttributeName: "activated"
+          AttributeType: "S"  
+      KeySchema: 
+        - 
+          AttributeName: "deviceId"
+          KeyType: "HASH"
+        - 
+          AttributeName: "name"
+          KeyType: "RANGE"
+      ProvisionedThroughput: 
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+      GlobalSecondaryIndexes: 
+        - 
+          IndexName: "myGSI"
+          KeySchema: 
+            - 
+              AttributeName: "deviceId"
+              KeyType: "HASH"
+            - 
+              AttributeName: "name"
+              KeyType: "RANGE"
+          Projection: 
+            NonKeyAttributes: 
+              - "email"
+              - "activationcode"
+            ProjectionType: "INCLUDE"
+          ProvisionedThroughput: 
+            ReadCapacityUnits: "5"
+            WriteCapacityUnits: "5"
   LambdaGlobalIoTProvisioningRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -121,7 +131,7 @@ Value: bar
       Action: 'lambda:invokeFunction'
       FunctionName:
         'Fn::GetAtt':
-          - GlobalProvisioningLambda
+          - Deviceactivation
           - Arn
       Principal: apigateway.amazonaws.com
       SourceArn:
