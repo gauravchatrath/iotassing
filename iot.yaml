@@ -8,14 +8,7 @@ Parameters:
     Description: S3 Bucket in the same region where you have put the zip for the Lambda.
     Type: String
     ConstraintDescription: Must be an existing S3 Bucket in the same region.
-    AllowedPattern: .+
-  IpStackApiKey:
-    Description: >-
-      API Key to access the api from http://ipstack.com. If you don't have an
-      API Key sign up at http://ipstack.com
-    Type: String
-    ConstraintDescription: Must be an existing API Key for ipstack.com
-    AllowedPattern: .+
+    AllowedPattern: .
 Resources:
   
 IOTtable: 
