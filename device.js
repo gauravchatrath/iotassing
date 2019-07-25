@@ -10,6 +10,9 @@ exports.handler = function(event, context) {
     Item:{
         "deviceId": event.deviceId,
         "name": event.name,
+        "activationCode": event.activationCode,
+        "activated": event.activated,
+        "email": event.email
         }
     };
 
