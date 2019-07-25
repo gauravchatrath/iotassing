@@ -8,15 +8,8 @@ exports.handler = function(event, context) {
    var params = {
     TableName:table,
     Item:{
-        "serialNumber": event.serialNumber,
-        "clientId": event.clientId,
-        "device": event.device,
-        "endpoint": event.endpoint,
-        "type": event.type,
-        "certificateId": event.certificateId,
-        "activationCode": event.activationCode,
-        "activated": event.activated,
-        "email": event.email
+        "deviceId": event.deviceId,
+        "name": event.name,
         }
     };
 
