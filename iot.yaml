@@ -172,7 +172,7 @@ Value: bar
                       - Ref: 'AWS::Region'
                       - ':lambda:path/2015-03-31/functions/'
                       - 'Fn::GetAtt':
-                          - GlobalProvisioningLambda
+                          - Deviceactivation
                           - Arn
                       - /invocations
                 responses:
