@@ -17,6 +17,43 @@ Parameters:
     ConstraintDescription: Must be an existing API Key for ipstack.com
     AllowedPattern: .+
 Resources:
+  
+IOTtable: 
+  Type: AWS::DynamoDB::Table
+  Properties: 
+    AttributeDefinitions: 
+      - 
+        AttributeName: "deviceId"
+        AttributeType: "S"
+      - 
+        AttributeName: "name"
+        AttributeType: "S"
+    KeySchema: 
+      - 
+        AttributeName: "deviceId"
+        KeyType: "HASH"
+      - 
+        AttributeName: "name"
+        KeyType: "RANGE"
+    ProvisionedThroughput: 
+       ReadCapacityUnits: "5"
+       WriteCapacityUnits: "5"
+    GlobalSecondaryIndexes: 
+      - 
+        IndexName: "myGSI"
+        KeySchema: 
+          - 
+            AttributeName: "deviceId"
+            KeyType: "HASH"
+        Projection: 
+          ProjectionType: "KEYS_ONLY
+        ProvisionedThroughput: 
+          ReadCapacityUnits: "5"
+          WriteCapacityUnits: "5"            
+    Tags:
+      - Key: foo
+Value: bar         
+         
   LambdaGlobalIoTProvisioningRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -54,7 +91,7 @@ Resources:
           - '-'
           - - LambdaGlobalIoTProvisioningRole
             - Ref: 'AWS::Region'
-  GlobalProvisioningLambda:
+  Devicecreation:
     Type: 'AWS::Lambda::Function'
     Properties:
       Handler: lambda_function.lambda_handler
@@ -65,12 +102,8 @@ Resources:
       Code:
         S3Bucket:
           Ref: S3BucketName
-        S3Key: iot-global-provisioning.zip
-      Environment:
-        Variables:
-          IPSTACK_API_KEY:
-            Ref: IpStackApiKey
-      Runtime: python2.7
+        S3Key: iotdevicecreation.zip
+      Runtime: node.js10.x
       MemorySize: 128
       Timeout: '60'
   LambdaPermission:
