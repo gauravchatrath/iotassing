@@ -5,7 +5,7 @@ Parameters:
     Description: S3 Bucket in the same region where you have put the zip for the Lambda.
     Type: String
     ConstraintDescription: Must be an existing S3 Bucket in the same region.
-    AllowedPattern: .
+    AllowedPattern: "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$"
 Resources:
   IOTtable: 
     Type: AWS::DynamoDB::Table
