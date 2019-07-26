@@ -1,8 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: >-
-  Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-  SPDX-License-Identifier: MIT-0. AWS CloudFormation template for Global IoT
-  Device Provisioning.
+Description: IOT testing
 Parameters:
   S3BucketName:
     Description: S3 Bucket in the same region where you have put the zip for the Lambda.
