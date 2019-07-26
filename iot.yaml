@@ -103,7 +103,7 @@ Resources:
         S3Bucket:
           Ref: S3BucketName
         S3Key: iotdevicecreation.zip
-      Runtime: node.js10.x
+      Runtime: nodejs10.x
       MemorySize: 128
       Timeout: '60'
   Deviceactivation:
@@ -118,7 +118,7 @@ Resources:
         S3Bucket:
           Ref: S3BucketName
         S3Key: iotdeviceactivation.zip
-      Runtime: node.js10.x
+      Runtime: nodejs10.x
       MemorySize: 128
       Timeout: '60'      
       
