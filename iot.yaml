@@ -184,7 +184,7 @@ Resources:
         schemes:
           - https
         paths:
-          /Deviceactivation:
+          /Devicecreation:
             post:
               consumes:
                 - application/json
@@ -203,7 +203,7 @@ Resources:
                       - Ref: 'AWS::Region'
                       - ':lambda:path/2015-03-31/functions/'
                       - 'Fn::GetAtt':
-                          - Deviceactivation
+                          - Devicecreation
                           - Arn
                       - /invocations
                 responses:
@@ -314,19 +314,20 @@ Resources:
     Properties:
       RestApiId:
         Ref: IoTApi
-  IoTProvisioningTable:
-    Type: 'AWS::DynamoDB::Table'
+  IoTRule:
+    Type: AWS::Events::Rule
     Properties:
-      AttributeDefinitions:
-        - AttributeName: thing_name
-          AttributeType: S
-      KeySchema:
-        - AttributeName: thing_name
-          KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: '5'
-        WriteCapacityUnits: '5'
-      TableName: iot-global-provisioning
+      Description: Events Rule with lambda
+      EventPattern:
+        source:
+          - aws.lambda
+      ScheduleExpression: rate(60 minutes)
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt 
+            - Deviceactivation
+            - Arn
+          Id: y321			
 Outputs:
   IoTApiGWUrl:
     Description: Amazon API Gateway URL for global iot device provisioning.
