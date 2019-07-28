@@ -9,7 +9,7 @@ Parameters:
 Resources:
   IOTtable: 
     Type: AWS::DynamoDB::Table
-    Properties: 
+    Properties:
       AttributeDefinitions: 
         - 
           AttributeName: "deviceId"
@@ -18,14 +18,11 @@ Resources:
           AttributeName: "name"
           AttributeType: "S"
         - 
-          AttributeName: "email"
-          AttributeType: "S" 
-        - 
           AttributeName: "activationcode"
-          AttributeType: "S"
+          AttributeType: "N"
         - 
-          AttributeName: "activated"
-          AttributeType: "S"  
+          AttributeName: "email"
+          AttributeType: "N"
       KeySchema: 
         - 
           AttributeName: "deviceId"
@@ -36,24 +33,57 @@ Resources:
       ProvisionedThroughput: 
         ReadCapacityUnits: "5"
         WriteCapacityUnits: "5"
+      TableName: "iotCatalog"
       GlobalSecondaryIndexes: 
         - 
           IndexName: "myGSI"
           KeySchema: 
             - 
-              AttributeName: "deviceId"
+              AttributeName: "activationcode"
               KeyType: "HASH"
             - 
               AttributeName: "name"
               KeyType: "RANGE"
           Projection: 
             NonKeyAttributes: 
+              - "deviceId"
               - "email"
-              - "activationcode"
             ProjectionType: "INCLUDE"
           ProvisionedThroughput: 
             ReadCapacityUnits: "5"
             WriteCapacityUnits: "5"
+        - 
+          IndexName: "myGSI2"
+          KeySchema: 
+            - 
+              AttributeName: "email"
+              KeyType: "HASH"
+            - 
+              AttributeName: "activationcode"
+              KeyType: "RANGE"
+          Projection: 
+            NonKeyAttributes: 
+              - "deviceId"
+              - "name"
+            ProjectionType: "INCLUDE"
+          ProvisionedThroughput: 
+            ReadCapacityUnits: "5"
+            WriteCapacityUnits: "5"
+      LocalSecondaryIndexes: 
+        - 
+          IndexName: "myLSI"
+          KeySchema: 
+            - 
+              AttributeName: "deviceId"
+              KeyType: "HASH"
+            - 
+              AttributeName: "activationcode"
+              KeyType: "RANGE"
+          Projection: 
+            NonKeyAttributes: 
+              - "name"
+              - "email"
+            ProjectionType: "INCLUDE"
   LambdaGlobalIoTProvisioningRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -84,6 +114,7 @@ Resources:
                   - 'iot:AttachPolicy'
                   - 'dynamodb:GetItem'
                   - 'dynamodb:UpdateItem'
+                  - 'dynamodb:PutItem'
                 Resource: '*'
       Path: /
       RoleName:
