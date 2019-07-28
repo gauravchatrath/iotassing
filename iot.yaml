@@ -180,11 +180,11 @@ Resources:
         info:
           version: '2018-03-16T15:33:58Z'
           title: IoT API
-        basePath: /test
+        basePath: /
         schemes:
           - https
         paths:
-          /device-provisioning:
+          /Deviceactivation:
             post:
               consumes:
                 - application/json
