@@ -338,4 +338,4 @@ Outputs:
           - Ref: IoTApi
           - .execute-api.
           - Ref: 'AWS::Region'
-          - .amazonaws.com/test/device-provisioning
+          - .amazonaws.com/Devicecreation
