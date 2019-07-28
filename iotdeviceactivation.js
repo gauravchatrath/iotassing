@@ -1,4 +1,3 @@
-console.log('Loading function');
 
 var AWS = require('aws-sdk');
 var dynamo = new AWS.DynamoDB.DocumentClient();
@@ -28,7 +27,7 @@ exports.handler = function(event, context) {
             var params = {
                 TableName:table,
                 Key:{
-                    "deviceID": event.deviceID,
+                    "deviceId": event.deviceId,
                     "name": event.name,
                 },
                 UpdateExpression: "set email = :val1, activated = :val2",
